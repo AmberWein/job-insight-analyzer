@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 function LogsTable({ logs }) {
   return (
     <table border="1" cellPadding="5" cellSpacing="0">
       <thead>
         <tr>
-            <th></th>
+          <th></th>
           <th>Source</th>
           <th>Country</th>
           <th>Status</th>
