@@ -1,5 +1,3 @@
-import './DateFilter.css';
-
 function DateFilter({ fromDate, toDate, setFromDate, setToDate }) {
   return (
     <>
