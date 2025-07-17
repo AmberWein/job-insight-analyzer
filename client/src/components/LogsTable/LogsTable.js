@@ -1,4 +1,5 @@
-import React from "react";
+// import React from "react";
+import './LogsTable.css';
 
 function LogsTable({ logs }) {
   return (
