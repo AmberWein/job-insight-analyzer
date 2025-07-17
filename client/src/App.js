@@ -18,6 +18,9 @@ function App() {
   const [clientOptions, setClientOptions] = useState([]);
   const [countryOptions, setCountryOptions] = useState([]);
 
+  const [sortField, setSortField] = useState("timestamp");
+  const [sortDirection, setSortDirection] = useState("decs");
+
   const [currentPage, setCurrentPage] = useState(1);
   const logsPerPage = 20;
 
@@ -35,13 +38,14 @@ function App() {
       });
   }, []);
 
-  // compute options (clients, countries)
+  // extract client and country options
   useEffect(() => {
     if (!logs || logs.length === 0) return;
 
     const uniqueClients = [
       ...new Set(logs.map((log) => log.transactionSourceName)),
     ].filter(Boolean);
+
     const uniqueCountries = [
       ...new Set(logs.map((log) => log.country_code)),
     ].filter(Boolean);
@@ -50,7 +54,7 @@ function App() {
     setCountryOptions(["All", ...uniqueCountries]);
   }, [logs]);
 
-  // filter logs based on filters
+  // filter logs
   useEffect(() => {
     const from = fromDate ? new Date(fromDate) : null;
     const to = toDate ? new Date(toDate) : null;
@@ -74,15 +78,42 @@ function App() {
     setCurrentPage(1); // reset pagination
   }, [logs, fromDate, toDate, selectedClient, selectedCountry]);
 
-  // pagination
+  // sorting
+  const sortLogs = (logsToSort) => {
+    const sorted = [...logsToSort].sort((a, b) => {
+      const valA = a[sortField];
+      const valB = b[sortField];
+
+      if (!valA || !valB) return 0;
+
+      if (sortDirection === "asc") {
+        return valA > valB ? 1 : valA < valB ? -1 : 0;
+      } else {
+        return valA < valB ? 1 : valA > valB ? -1 : 0;
+      }
+    });
+
+    return sorted;
+  };
+
+  const sortedLogs = sortLogs(filteredLogs);
   const indexOfLastLog = currentPage * logsPerPage;
   const indexOfFirstLog = indexOfLastLog - logsPerPage;
-  const currentLogs = filteredLogs.slice(indexOfFirstLog, indexOfLastLog);
+  const currentLogs = sortedLogs.slice(indexOfFirstLog, indexOfLastLog);
   const totalPages = Math.ceil(filteredLogs.length / logsPerPage);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
+    }
+  };
+
+  const handleSortChange = (field) => {
+    if (field === sortField) {
+      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortField(field);
+      setSortDirection("desc");
     }
   };
 
@@ -99,7 +130,12 @@ function App() {
         countryFilter={{ countryOptions, selectedCountry, setSelectedCountry }}
       />
 
-      <LogsTable logs={currentLogs} />
+      <LogsTable
+        logs={currentLogs}
+        sortField={sortField}
+        sortDirection={sortDirection}
+        onSortChange={handleSortChange}
+      />
 
       <div className="pagination">
         <button
