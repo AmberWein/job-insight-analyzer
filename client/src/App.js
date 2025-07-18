@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Dashboard from "./components/Dashboard/Dashboard";
+import ChatContainer from "./components/Chat/ChatContainer/ChatContainer";
 import "./App.css";
 
 function App() {
@@ -27,9 +28,13 @@ function App() {
   if (error) return <p>{error}</p>;
 
   return (
+    // <div className="app-container">
+    //   <h1>Job Trading Logs</h1>
+    //   <Dashboard logs={logs} />
+    // </div>
     <div className="app-container">
-      <h1>Job Trading Logs</h1>
-      <Dashboard logs={logs} />
+      <h1>AI Chat Assistant</h1>
+      <ChatContainer />
     </div>
   );
 }
