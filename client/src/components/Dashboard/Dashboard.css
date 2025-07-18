@@ -1,26 +1,3 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f7f9fc;
-  margin: 0;
-  padding: 20px;
-  color: #333;
-}
-
-h1 {
-  text-align: center;
-  color: #0b5345;
-  margin-bottom: 30px;
-}
-
-.app-container {
-  max-width: 1000px;
-  margin: auto;
-  background-color: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -84,4 +61,10 @@ button:hover:not(:disabled) {
 .pagination span {
   font-weight: bold;
   font-size: 16px;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
