@@ -6,7 +6,7 @@ const fetch = (...args) =>
 function getISORanges() {
   const now = new Date();
   const nowISO = now.toISOString();
-  
+
   // start of today (00:00:00)
   const todayStart = new Date(
     now.getFullYear(),
@@ -113,6 +113,20 @@ Answer:
     "$lt": "${lastMonthEnd}"
   }
 }
+
+- Return ONLY the MongoDB query object as valid JSON suitable for collection.find().
++ Return ONLY a valid JSON object like:
++ {
++   "query": { ... },               // required - MongoDB filter
++   "sum_field": "field.path"       // optional - if question is about totals
++ }
+
+...
+
++ If the user asks "how many", "total", or a question involving summing a field,
++ include a key "sum_field" with the full dot-notation path (e.g., "progress.TOTAL_JOBS_SENT_TO_INDEX")
+
++ If the question is unclear or unsupported, respond with exactly: "UNSUPPORTED"
 
 Question: "${question}"
 `;
