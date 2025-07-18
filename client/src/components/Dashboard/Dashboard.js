@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import LogsChart from "../LogsChart/LogsChart";
-import LogsTable from "../LogsTable/LogsTable";
-import Filters from "../Filters/Filters";
+import LogsChart from "./LogsChart/LogsChart";
+import LogsTable from "./LogsTable/LogsTable";
+import Filters from "./Filters/Filters";
+import "./Dashboard.css";
+
+
 
 function Dashboard({ logs }) {
   const [fromDate, setFromDate] = useState("");
@@ -17,12 +20,16 @@ function Dashboard({ logs }) {
 
   // extract filter options
   const clientOptions = useMemo(() => {
-    const unique = [...new Set(logs.map((l) => l.transactionSourceName))].filter(Boolean);
+    const unique = [
+      ...new Set(logs.map((l) => l.transactionSourceName)),
+    ].filter(Boolean);
     return ["All", ...unique];
   }, [logs]);
 
   const countryOptions = useMemo(() => {
-    const unique = [...new Set(logs.map((l) => l.country_code))].filter(Boolean);
+    const unique = [...new Set(logs.map((l) => l.country_code))].filter(
+      Boolean
+    );
     return ["All", ...unique];
   }, [logs]);
 
@@ -34,8 +41,11 @@ function Dashboard({ logs }) {
     return logs.filter((log) => {
       const ts = new Date(log.timestamp);
       const matchesDate = (!from || ts >= from) && (!to || ts <= to);
-      const matchesClient = selectedClient === "All" || log.transactionSourceName === selectedClient;
-      const matchesCountry = selectedCountry === "All" || log.country_code === selectedCountry;
+      const matchesClient =
+        selectedClient === "All" ||
+        log.transactionSourceName === selectedClient;
+      const matchesCountry =
+        selectedCountry === "All" || log.country_code === selectedCountry;
       return matchesDate && matchesClient && matchesCountry;
     });
   }, [logs, fromDate, toDate, selectedClient, selectedCountry]);
@@ -49,8 +59,16 @@ function Dashboard({ logs }) {
       if (!valA || !valB) return 0;
 
       return sortDirection === "asc"
-        ? valA > valB ? 1 : valA < valB ? -1 : 0
-        : valA < valB ? 1 : valA > valB ? -1 : 0;
+        ? valA > valB
+          ? 1
+          : valA < valB
+          ? -1
+          : 0
+        : valA < valB
+        ? 1
+        : valA > valB
+        ? -1
+        : 0;
     });
   }, [filteredLogs, sortField, sortDirection]);
 
@@ -81,16 +99,9 @@ function Dashboard({ logs }) {
   return (
     <div className="dashboard-container">
       <Filters
-        fromDate={fromDate}
-        toDate={toDate}
-        setFromDate={setFromDate}
-        setToDate={setToDate}
-        selectedClient={selectedClient}
-        setSelectedClient={setSelectedClient}
-        selectedCountry={selectedCountry}
-        setSelectedCountry={setSelectedCountry}
-        clientOptions={clientOptions}
-        countryOptions={countryOptions}
+        dateFilter={{ fromDate, toDate, setFromDate, setToDate }}
+        clientFilter={{ clientOptions, selectedClient, setSelectedClient }}
+        countryFilter={{ countryOptions, selectedCountry, setSelectedCountry }}
       />
 
       <LogsChart logs={filteredLogs} />
@@ -104,13 +115,19 @@ function Dashboard({ logs }) {
 
       {/* pagination */}
       <div className="pagination-controls">
-        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
           &lt; Prev
         </button>
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
           Next &gt;
         </button>
       </div>
