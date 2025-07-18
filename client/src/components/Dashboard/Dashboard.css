@@ -1,4 +1,4 @@
-/* body {
+body {
   font-family: Arial, sans-serif;
   background-color: #f7f9fc;
   margin: 0;
@@ -84,4 +84,4 @@ button:hover:not(:disabled) {
 .pagination span {
   font-weight: bold;
   font-size: 16px;
-} */
+}
