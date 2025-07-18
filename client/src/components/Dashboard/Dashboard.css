@@ -37,27 +37,6 @@ input[type="date"]:focus {
   text-align: center;
 }
 
-button {
-  padding: 8px 16px;
-  margin: 0 10px;
-  background-color: #45b39d;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-button:hover:not(:disabled) {
-  background-color: #16a085;
-}
-
 .pagination span {
   font-weight: bold;
   font-size: 16px;

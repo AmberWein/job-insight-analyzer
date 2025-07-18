@@ -113,7 +113,6 @@ function Dashboard({ logs }) {
         onSortChange={handleSortChange}
       />
 
-      {/* pagination */}
       <div className="pagination-controls">
         <button
           onClick={() => handlePageChange(currentPage - 1)}

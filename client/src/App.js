@@ -9,6 +9,7 @@ function App() {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeScreen, setActiveScreen] = useState("dashboard");
 
   // fetch logs from the server
   useEffect(() => {
@@ -24,17 +25,36 @@ function App() {
       });
   }, []);
 
-  if (loading) return <p>Loading data...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <div>Loading data...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
-    // <div className="app-container">
-    //   <h1>Job Trading Logs</h1>
-    //   <Dashboard logs={logs} />
-    // </div>
     <div className="app-container">
-      <h1>AI Chat Assistant</h1>
-      <ChatContainer />
+      <header className="app-header">
+        <h1>Job trading analytics</h1>
+        <nav className="app-nav">
+          <button
+            className={`nav-button ${activeScreen === "dashboard" ? "active" : ""}`}
+            onClick={() => setActiveScreen("dashboard")}
+          >
+            Operations dashboard
+          </button>
+          <button
+            className={`nav-button ${activeScreen === "chat" ? "active" : ""}`}
+            onClick={() => setActiveScreen("chat")}
+          >
+            AI chat assistant
+          </button>
+        </nav>
+      </header>
+
+      <main className="app-main">
+        {activeScreen === "dashboard" ? (
+          <Dashboard logs={logs} />
+        ) : (
+          <ChatContainer />
+        )}
+      </main>
     </div>
   );
 }

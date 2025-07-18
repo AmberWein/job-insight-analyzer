@@ -20,3 +20,78 @@ h1 {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.filters > div {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+select,
+input[type="date"] {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+
+select:focus,
+input[type="date"]:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+button {
+  padding: 8px 16px;
+  margin: 0 10px;
+  background-color: #45b39d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.nav-button {
+  background-color: #cccccc;
+  color: white;
+}
+
+.nav-button.active {
+  background-color: #45b39d;
+  color: white;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #16a085;
+}
+
+.pagination span {
+  font-weight: bold;
+  font-size: 16px;
+}
