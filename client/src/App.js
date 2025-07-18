@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import LogsChart from "./components/LogsChart/LogsChart";
 import LogsTable from "./components/LogsTable/LogsTable";
 import Filters from "./components/Filters/Filters";
 import "./App.css";
@@ -129,6 +130,8 @@ function App() {
         clientFilter={{ clientOptions, selectedClient, setSelectedClient }}
         countryFilter={{ countryOptions, selectedCountry, setSelectedCountry }}
       />
+
+      <LogsChart logs={filteredLogs} />
 
       <LogsTable
         logs={currentLogs}
