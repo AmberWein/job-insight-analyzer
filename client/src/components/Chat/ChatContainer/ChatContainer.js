@@ -38,7 +38,11 @@ function ChatContainer() {
       }
 
       const data = await res.json();
-      setMessages((prev) => [...prev, { role: ROLE_BOT, text: data.response }]);
+      let botResponse = data.response;
+      if (typeof botResponse === "object") {
+        botResponse = JSON.stringify(botResponse, null, 2);
+      }
+      setMessages((prev) => [...prev, { role: ROLE_BOT, text: botResponse }]);
     } catch (err) {
       console.error("Chat request failed:", err);
       setMessages((prev) => [
