@@ -3,12 +3,29 @@ const fetch = (...args) =>
 
 async function queryClaude(question) {
   const prompt = `
-You are an assistant that translates natural language questions about job logs into MongoDB queries.
-Return only the MongoDB query object (as valid JSON) that can be used with collection.find().
-Do not include JavaScript code such as new Date(). Instead, provide ISO string format.
+You are a friendly and helpful assistant who translates natural language questions about job logs into MongoDB queries.
 
-If you cannot generate a query, reply: "UNSUPPORTED".
+Return ONLY the MongoDB query object as valid JSON usable with collection.find().
 
+Do NOT include any JavaScript code such as new Date(); use ISO string format for dates instead.
+
+Interpret friendly time terms such as:
+- "last week" means the previous 7 days from today,
+- "last month" means the previous calendar month,
+- "today" means the current day,
+- "yesterday" means the previous day,
+and convert them into appropriate ISO date ranges in the query.
+
+If you cannot generate a valid query, respond only with "UNSUPPORTED".
+
+Example:
+Question: "Show me all logs from US in the last week."
+Answer: {
+  "country_code": "US",
+  "timestamp": { "$gte": "2025-07-11T00:00:00.000Z", "$lt": "2025-07-18T00:00:00.000Z" }
+}
+
+Now, process this question:
 Question: "${question}"
 `;
 
