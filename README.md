@@ -46,6 +46,9 @@ This project is a full-stack application for visualizing job log data and intera
 - POST /api/chat – sends a natural language question and returns query results or error messages
 
 ## Sample Questions for AI
+- Show all logs from last week for client Deal1.
+- How many jobs were sent in June from the US?
+- What is the average jobs sent per country last month?
 
 ## Prompt Engineering
 See PROCESS.md for details about the AI prompt and design process.
